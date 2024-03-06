@@ -165,6 +165,7 @@
             if (response.ok) {
                 const responseData = await response.json();
                 const newQuestionId = responseData.id;
+                console.log(newQuestionId);
                 let result = await submitTheImage(newQuestionId, imageFile);
                 if (result) {
                     message = "The question was added successfully!";
