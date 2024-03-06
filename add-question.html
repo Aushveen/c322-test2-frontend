@@ -146,7 +146,7 @@
               answer: answerText 
           };
 
-          let imageFile = formData.get("imageFile"); // This might not work directly due to how FormData handles files
+          let imageFile = document.getElementById("imageUpload").files[0];
           await addTheQuestion(question, imageFile);
         }
 
@@ -170,13 +170,13 @@
                     displayTheQuestions();
                 } else {
                     message = "Question data was saved, but the image was not.";
+                    console.log(question.id);
                 }
             } else {
                 console.log(response);
                 message = "Question data could not be saved.";
             }
             alert(message);
-            console.log(request);
         }
 
         async function submitTheImage(id, imageFile) {
