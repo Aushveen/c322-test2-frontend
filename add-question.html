@@ -122,17 +122,32 @@
         }
 
         async function add() {
-            let form = document.forms[0];
-            let formData = new FormData(form);
-            let imageFile = formData.get("imageFile");
+          event.preventDefault();
+          let form = document.forms[0];
+          let formData = new FormData(form);
+          
+          let selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+          let answerText;
+          switch (selectedAnswer) {
+              case 'A':
+                  answerText = formData.get("optionA");
+                  break;
+              case 'B':
+                  answerText = formData.get("optionB");
+                  break;
+              case 'C':
+                  answerText = formData.get("optionC");
+                  break;
+          }
 
-            let question = {
-                description: formData.get("description"),
-                choices: [formData.get("optionA"), formData.get("optionB"), formData.get("optionC")],
-                answer: formData.get(formData.get("answer"))
-            };
+          let question = {
+              description: formData.get("description"),
+              choices: [formData.get("optionA"), formData.get("optionB"), formData.get("optionC")],
+              answer: answerText 
+          };
 
-            await addTheQuestion(question, imageFile);
+          let imageFile = formData.get("imageFile"); // This might not work directly due to how FormData handles files
+          await addTheQuestion(question, imageFile);
         }
 
         async function addTheQuestion(question, imageFile) {
