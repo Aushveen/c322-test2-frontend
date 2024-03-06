@@ -163,20 +163,23 @@
 
             let response = await fetch(host + "/questions", request);
             if (response.ok) {
-                let result = await submitTheImage(question.id, imageFile);
+                const responseData = await response.json();
+                const newQuestionId = responseData.id;
+                let result = await submitTheImage(newQuestionId, imageFile);
                 if (result) {
                     message = "The question was added successfully!";
                     questions.push(question);
                     displayTheQuestions();
                 } else {
                     message = "Question data was saved, but the image was not.";
-                    console.log(question.id);
+                    console.log(newQuestionId);
                 }
             } else {
                 console.log(response);
                 message = "Question data could not be saved.";
             }
             alert(message);
+
         }
 
         async function submitTheImage(id, imageFile) {
